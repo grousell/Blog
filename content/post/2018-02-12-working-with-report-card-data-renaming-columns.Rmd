@@ -51,9 +51,13 @@ df_3 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sa
 Examine column names:
 
 <div class="col3">
-```{r ExamineData}
+```{r ExamineData1}
 data.frame (names  (df_1))
+```
+```{r ExamineData2}
 data.frame (names  (df_2))
+```
+```{r ExamineData3}
 data.frame (names  (df_3))
 ```
 </div>
