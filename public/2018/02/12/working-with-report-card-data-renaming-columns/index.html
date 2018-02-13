@@ -59,7 +59,7 @@
 
   <article class="article">
     
-    <span class="article-duration">10 min read</span>
+    <span class="article-duration">9 min read</span>
     
 
     <h1 class="article-title">Working with Report Card Data - Renaming Columns</h1>
@@ -95,21 +95,9 @@
 <h2>Load Data</h2>
 <p>I have created a couple of different sample files with fictional report card. (<em>NOTE: the data presented was randomly generated and does not represent any school or board</em>)</p>
 <p>Column headers in each file are slightly different to try and represent possible different naming conventions.</p>
-<pre class="r"><code>df_1 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_1.csv&quot;)</code></pre>
-<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
-## a multiple of vector length (arg 2)</code></pre>
-<pre><code>## Warning: 1 parsing failure.
-## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
-<pre class="r"><code>df_2 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_2.csv&quot;)</code></pre>
-<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not a multiple of vector length (arg 2)
-
-## Warning in rbind(names(probs), probs_f): 1 parsing failure.
-## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
-<pre class="r"><code>df_3 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_3.csv&quot;)</code></pre>
-<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not a multiple of vector length (arg 2)
-
-## Warning in rbind(names(probs), probs_f): 1 parsing failure.
-## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
+<pre class="r"><code>df_1 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_1.csv&quot;)
+df_2 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_2.csv&quot;)
+df_3 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_3.csv&quot;)</code></pre>
 Examine column names:
 <div class="col3">
 <pre class="r"><code>data.frame (names  (df_1))</code></pre>
