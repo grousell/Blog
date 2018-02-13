@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Report Cards on A Hugo website</title>
+    <link>/categories/report-cards/</link>
+    <description>Recent content in Report Cards on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/report-cards/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working with Report Card Data - Renaming Columns</title>
+      <link>/2018/02/12/working-with-report-card-data-renaming-columns/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/12/working-with-report-card-data-renaming-columns/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

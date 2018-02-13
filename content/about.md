@@ -1,6 +1,8 @@
 ---
 title: "About"
-date: "2016-05-05T21:48:51-07:00"
+date: "2016-05-05"
 ---
 
-This is a "hello world" example website for the [**blogdown**](https://github.com/rstudio/blogdown) package. The theme was forked from [@jrutheiser/hugo-lithium-theme](https://github.com/jrutheiser/hugo-lithium-theme) and modified by [Yihui Xie](https://github.com/yihui/hugo-lithium-theme).
+I'm the System Research Leader and Managing Information for Student Achievement (MISA) lead at the [Grand Erie District School Board](http://granderie.ca/) in south-western Ontario. My interests include data visualisation, program evaluation and knowledge mobilisation.  
+
+I am currently active in research networks across the province of Ontario including the [Data User Group](https://dugroup.ca/) and [London Region MISA Profession Network](http://misalondon.ca/).

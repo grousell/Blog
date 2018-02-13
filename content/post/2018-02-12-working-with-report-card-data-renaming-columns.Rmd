@@ -1,0 +1,148 @@
+---
+title: Working with Report Card Data - Renaming Columns
+author: Greg Rousell
+date: '2018-02-12'
+slug: working-with-report-card-data-renaming-columns
+categories:
+  - Report Cards
+tags:
+  - dplyr
+---
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+
+One of the common problems working with data that is provided by other departments or organisations is the lack of standard naming conventions. Across school boards in Ontario there are required subjects however naming conventions are often different (i.e. reading could be reported as Read, reading, read, etc.). This poses two problems:  
+
+1. Spending time cleaning columns names 
+2. Sharing code between colleagues  
+
+In order to try and solve these problems I have started to develop functions that will improve my own workflow as well as be better able to share code with colleagues from other school boards. I hope to eventually wrap a series of functions into a package. 
+
+##Load Required Packages
+```{r LoadPackage, message=FALSE}
+library(tidyverse)
+```
+
+##Load Data
+I have created a couple of different sample files with fictional report card. (*NOTE: the data presented was randomly generated and does not represent any school or board*)  
+
+Column headers in each file are slightly different to try and represent possible different naming conventions. 
+
+```{r LoadData, message=FALSE}
+df_1 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_1.csv")
+df_2 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_2.csv")
+df_3 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_3.csv")
+
+
+```
+
+Examine column names:
+<div class="col3">
+```{r ExamineData}
+data.frame (names  (df_1))
+data.frame (names  (df_2))
+data.frame (names  (df_3))
+```
+</div>
+
+
+##Function to Rename Columns
+
+Using the **str_detect** function from the **stringr** package we can identify strings within the column headers and rename the variables.  
+
+```{r Function}
+rename_ele_eport_card <- function(df){
+  #Install/Load stringr package
+
+  if(!require(stringr)){
+    install.packages("stringr")
+    library(stringr)
+  }
+
+  # Convert names to lower case
+  colnames (df) <- tolower (names(df))
+  # Rename columns
+  colnames(df)[str_detect(colnames(df), "resp")] <- 'Responsibility' #detect if "resp" appears in column name and rename to "Responsibility"
+  colnames(df)[str_detect(colnames(df), "ind")] <- 'Independent Work'
+  colnames(df)[str_detect(colnames(df), "init")] <- 'Initiative'
+  colnames(df)[str_detect(colnames(df), "org")] <- 'Organization'
+  colnames(df)[str_detect(colnames(df), "coll")] <- 'Collaboration'
+  colnames(df)[str_detect(colnames(df), "self") | str_detect(colnames (df), "reg")] <- 'Self Regulation'
+
+  colnames(df)[str_detect(colnames(df), "rea") & !str_detect(colnames(df), "fre")] <- 'Reading'
+  colnames(df)[str_detect(colnames(df), "wri") & !str_detect(colnames(df), "fre")] <- 'Writing'
+  colnames(df)[str_detect(colnames(df), "med")] <- 'Media Literacy'
+  colnames(df)[str_detect(colnames(df), "oral")] <- 'Oral Communication'
+
+  colnames(df)[str_detect(colnames(df), "list") & str_detect(colnames(df), "fre")] <- 'French Listening'
+  colnames(df)[str_detect(colnames(df), "spea") & str_detect(colnames(df), "fre")] <- 'French Speaking'
+  colnames(df)[str_detect(colnames(df), "rea") & str_detect(colnames(df), "fre")] <- 'French Reading'
+  colnames(df)[str_detect(colnames(df), "wri") & str_detect(colnames(df), "fre")] <- 'French Writing'
+
+  colnames(df)[str_detect(colnames(df), "num")] <- 'Number Sense and Numeration'
+  colnames(df)[str_detect(colnames(df), "meas")] <- 'Measurement'
+  colnames(df)[str_detect(colnames(df), "geo")] <- 'Geometry'
+  colnames(df)[str_detect(colnames(df), "patt")] <- 'Patterning'
+  colnames(df)[str_detect(colnames(df), "data")] <- 'Data Management'
+
+  colnames(df)[str_detect(colnames(df), "sci") | str_detect(colnames(df), "tech")] <- 'Science and Technology'
+  colnames(df)[str_detect(colnames(df), "soc")]  <- 'Social Studies'
+  colnames(df)[str_detect(colnames(df), "health")]  <- 'Health Education'
+  colnames(df)[str_detect(colnames(df), "phys")]  <- 'Physical Education'
+
+  colnames(df)[str_detect(colnames(df), "dance")]  <- 'Dance'
+  colnames(df)[str_detect(colnames(df), "drama")]  <- 'Drama'
+  colnames(df)[str_detect(colnames(df), "music")]  <- 'Music'
+  colnames(df)[str_detect(colnames(df), "vis")]  <- 'Visual Arts'
+
+  return(df)
+
+}
+```
+
+##Check Function
+### **Dataframe 1**:
+<div class="col2">
+
+```{r Names_df_1}
+data.frame (names (df_1))
+data.frame (names (rename_ele_eport_card(df_1)))
+```
+</div>
+
+We can see that the subject column names have been changed to more complete description, i.e. "init" has been changed to "Initiative", and "data manage" has been changed to "Data Management". 
+
+### **Dataframe 2**:
+<div class="col2">
+
+```{r Names_df_2}
+data.frame (names (df_2))
+data.frame (names (rename_ele_eport_card(df_2)))
+```
+</div>
+
+We see the same result for the second data frame - all the subject names are the same as the first data frame. 
+
+### **Dataframe 3**:
+<div class="col2">
+
+```{r Names_df_3}
+data.frame (names (df_3))
+data.frame (names (rename_ele_eport_card(df_3)))
+```
+</div>
+
+Now that column names are all standard then reproducible code can be shared among other data analysts from different boards. 
+

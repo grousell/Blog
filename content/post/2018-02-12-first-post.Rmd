@@ -1,0 +1,9 @@
+---
+title: "First Post"
+date: 2018-02-12
+draft: true
+---
+
+Inspired by Yihui Xie's [blogdown package]( https://slides.yihui.name/2018-blogdown-rstudio-conf-Yihui-Xie.html#1) I have jumped into the world of blogging. Going over the presentations from [Rstudio::conf](https://www.rstudio.com/conference/) I have become motivated to start documenting my R journey and and share some of my work.  I am often asked by colleagues at other organisations  how I do something in R so I'm hoping this will provide an easier format to share and explain some of my work.   
+
+Right now it's very basic but as I learn more about the Yihui's blogdown package I'm sure this space will expand. 
