@@ -1,12 +1,10 @@
 ---
-title: Working with Report Card Data - Renaming Columns
-author: Greg Rousell
+title: "Working with Report Card Data - Renaming Columns"
+author: "Greg Rousell"
 date: '2018-02-12'
 slug: working-with-report-card-data-renaming-columns
-categories:
-  - Report Cards
-tags:
-  - dplyr
+tags: dplyr
+categories: Report Cards
 ---
 
 <style>
@@ -53,9 +51,11 @@ Examine column names:
 ```{r ExamineData1}
 data.frame (names  (df_1))
 ```
+
 ```{r ExamineData2}
 data.frame (names  (df_2))
 ```
+
 ```{r ExamineData3}
 data.frame (names  (df_3))
 ```
