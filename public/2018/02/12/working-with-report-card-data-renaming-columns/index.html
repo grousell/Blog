@@ -19,6 +19,11 @@
 
 
 
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -54,7 +59,7 @@
 
   <article class="article">
     
-    <span class="article-duration">0 min read</span>
+    <span class="article-duration">10 min read</span>
     
 
     <h1 class="article-title">Working with Report Card Data - Renaming Columns</h1>
@@ -64,7 +69,478 @@
     
 
     <div class="article-content">
-      
+      <style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<p>One of the common problems working with data that is provided by other departments or organisations is the lack of standard naming conventions. Across school boards in Ontario there are required subjects however naming conventions are often different (i.e. reading could be reported as Read, reading, read, etc.). This poses two problems:</p>
+<ol style="list-style-type: decimal">
+<li>Spending time cleaning columns names</li>
+<li>Sharing code between colleagues</li>
+</ol>
+<p>In order to try and solve these problems I have started to develop functions that will improve my own workflow as well as be better able to share code with colleagues from other school boards. I hope to eventually wrap a series of functions into a package.</p>
+<div id="load-required-packages" class="section level2">
+<h2>Load Required Packages</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
+<p>I have created a couple of different sample files with fictional report card. (<em>NOTE: the data presented was randomly generated and does not represent any school or board</em>)</p>
+<p>Column headers in each file are slightly different to try and represent possible different naming conventions.</p>
+<pre class="r"><code>df_1 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_1.csv&quot;)</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
+## a multiple of vector length (arg 2)</code></pre>
+<pre><code>## Warning: 1 parsing failure.
+## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
+<pre class="r"><code>df_2 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_2.csv&quot;)</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not a multiple of vector length (arg 2)
+
+## Warning in rbind(names(probs), probs_f): 1 parsing failure.
+## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
+<pre class="r"><code>df_3 &lt;- read_csv(&quot;https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_3.csv&quot;)</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not a multiple of vector length (arg 2)
+
+## Warning in rbind(names(probs), probs_f): 1 parsing failure.
+## row # A tibble: 1 x 5 col     row col   expected   actual file                                       expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                                      actual 1  1001 OEN   an integer OEN    &#39;https://raw.githubusercontent.com/grouse~ file # A tibble: 1 x 5</code></pre>
+Examine column names:
+<div class="col3">
+<pre class="r"><code>data.frame (names  (df_1))</code></pre>
+<pre><code>##                    names.df_1.
+## 1                       School
+## 2                     SchoolID
+## 3                   first_name
+## 4                    last_name
+## 5                       gender
+## 6                          OEN
+## 7          Student Grade Level
+## 8            Enrollment Status
+## 9             Reporting Period
+## 10              Responsibility
+## 11            Independent Work
+## 12                  Initiative
+## 13                Organization
+## 14               Collaboration
+## 15             Self Regulation
+## 16                 ESL/ESL/IEP
+## 17           Interview Request
+## 18                     Reading
+## 19                     Writing
+## 20          Oral Communication
+## 21              Media Literacy
+## 22            French Listening
+## 23             French Speaking
+## 24              French Reading
+## 25              French Writing
+## 26 Number Sense and Numeration
+## 27                 Measurement
+## 28  Geometry and Spatial Sense
+## 29      Patterning and Algebra
+## 30             Data Management
+## 31      Science and Technology
+## 32              Social Studies
+## 33            Health Education
+## 34          Physical Education
+## 35                       Dance
+## 36                       Drama
+## 37                       Music
+## 38                 Visual Arts</code></pre>
+<pre class="r"><code>data.frame (names  (df_2))</code></pre>
+<pre><code>##                names.df_2.
+## 1                   School
+## 2                 SchoolID
+## 3               first_name
+## 4                last_name
+## 5                   gender
+## 6                      OEN
+## 7      Student Grade Level
+## 8        Enrollment Status
+## 9         Reporting Period
+## 10          responsibility
+## 11                ind work
+## 12              initiative
+## 13                     org
+## 14                    coll
+## 15                self reg
+## 16             ESL/ESL/IEP
+## 17                    read
+## 18                   write
+## 19               oral comm
+## 20          media literacy
+## 21           french listen
+## 22            french speak
+## 23             french read
+## 24            french write
+## 25 number sense numeration
+## 26                    meas
+## 27      geom spatial sense
+## 28            patt and alg
+## 29                data mgt
+## 30            sci and tech
+## 31             soc studies
+## 32                  health
+## 33                 phys ed
+## 34                   dance
+## 35                   drama
+## 36                   music
+## 37                vis arts</code></pre>
+<pre class="r"><code>data.frame (names  (df_3))</code></pre>
+<pre><code>##             names.df_3.
+## 1                School
+## 2              SchoolID
+## 3            first_name
+## 4             last_name
+## 5                gender
+## 6                   OEN
+## 7   Student Grade Level
+## 8     Enrollment Status
+## 9      Reporting Period
+## 10                 Resp
+## 11             Ind Work
+## 12                 Init
+## 13                  Org
+## 14                 Coll
+## 15      Self Regulation
+## 16          ESL/ESL/IEP
+## 17                 Read
+## 18                Write
+## 19            Oral Comm
+## 20            Media Lit
+## 21        Listen French
+## 22         Speak French
+## 23          Read French
+## 24         Write French
+## 25 Num Sense Numeration
+## 26                 Meas
+## 27     Geom and Spatial
+## 28         Patt and Alg
+## 29             Data Mgt
+## 30     Science and Tech
+## 31          Soc Studies
+## 32               Health
+## 33              Phys Ed
+## 34                Dance
+## 35                Drama
+## 36                Music
+## 37             Vis Arts</code></pre>
+</div>
+</div>
+<div id="function-to-rename-columns" class="section level2">
+<h2>Function to Rename Columns</h2>
+<p>Using the <strong>str_detect</strong> function from the <strong>stringr</strong> package we can identify strings within the column headers and rename the variables.</p>
+<pre class="r"><code>rename_ele_eport_card &lt;- function(df){
+  #Install/Load stringr package
+
+  if(!require(stringr)){
+    install.packages(&quot;stringr&quot;)
+    library(stringr)
+  }
+
+  # Convert names to lower case
+  colnames (df) &lt;- tolower (names(df))
+  # Rename columns
+  colnames(df)[str_detect(colnames(df), &quot;resp&quot;)] &lt;- &#39;Responsibility&#39; #detect if &quot;resp&quot; appears in column name and rename to &quot;Responsibility&quot;
+  colnames(df)[str_detect(colnames(df), &quot;ind&quot;)] &lt;- &#39;Independent Work&#39;
+  colnames(df)[str_detect(colnames(df), &quot;init&quot;)] &lt;- &#39;Initiative&#39;
+  colnames(df)[str_detect(colnames(df), &quot;org&quot;)] &lt;- &#39;Organization&#39;
+  colnames(df)[str_detect(colnames(df), &quot;coll&quot;)] &lt;- &#39;Collaboration&#39;
+  colnames(df)[str_detect(colnames(df), &quot;self&quot;) | str_detect(colnames (df), &quot;reg&quot;)] &lt;- &#39;Self Regulation&#39;
+
+  colnames(df)[str_detect(colnames(df), &quot;rea&quot;) &amp; !str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;Reading&#39;
+  colnames(df)[str_detect(colnames(df), &quot;wri&quot;) &amp; !str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;Writing&#39;
+  colnames(df)[str_detect(colnames(df), &quot;med&quot;)] &lt;- &#39;Media Literacy&#39;
+  colnames(df)[str_detect(colnames(df), &quot;oral&quot;)] &lt;- &#39;Oral Communication&#39;
+
+  colnames(df)[str_detect(colnames(df), &quot;list&quot;) &amp; str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;French Listening&#39;
+  colnames(df)[str_detect(colnames(df), &quot;spea&quot;) &amp; str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;French Speaking&#39;
+  colnames(df)[str_detect(colnames(df), &quot;rea&quot;) &amp; str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;French Reading&#39;
+  colnames(df)[str_detect(colnames(df), &quot;wri&quot;) &amp; str_detect(colnames(df), &quot;fre&quot;)] &lt;- &#39;French Writing&#39;
+
+  colnames(df)[str_detect(colnames(df), &quot;num&quot;)] &lt;- &#39;Number Sense and Numeration&#39;
+  colnames(df)[str_detect(colnames(df), &quot;meas&quot;)] &lt;- &#39;Measurement&#39;
+  colnames(df)[str_detect(colnames(df), &quot;geo&quot;)] &lt;- &#39;Geometry&#39;
+  colnames(df)[str_detect(colnames(df), &quot;patt&quot;)] &lt;- &#39;Patterning&#39;
+  colnames(df)[str_detect(colnames(df), &quot;data&quot;)] &lt;- &#39;Data Management&#39;
+
+  colnames(df)[str_detect(colnames(df), &quot;sci&quot;) | str_detect(colnames(df), &quot;tech&quot;)] &lt;- &#39;Science and Technology&#39;
+  colnames(df)[str_detect(colnames(df), &quot;soc&quot;)]  &lt;- &#39;Social Studies&#39;
+  colnames(df)[str_detect(colnames(df), &quot;health&quot;)]  &lt;- &#39;Health Education&#39;
+  colnames(df)[str_detect(colnames(df), &quot;phys&quot;)]  &lt;- &#39;Physical Education&#39;
+
+  colnames(df)[str_detect(colnames(df), &quot;dance&quot;)]  &lt;- &#39;Dance&#39;
+  colnames(df)[str_detect(colnames(df), &quot;drama&quot;)]  &lt;- &#39;Drama&#39;
+  colnames(df)[str_detect(colnames(df), &quot;music&quot;)]  &lt;- &#39;Music&#39;
+  colnames(df)[str_detect(colnames(df), &quot;vis&quot;)]  &lt;- &#39;Visual Arts&#39;
+
+  return(df)
+
+}</code></pre>
+</div>
+<div id="check-function" class="section level2">
+<h2>Check Function</h2>
+<div id="dataframe-1" class="section level3">
+<h3><strong>Dataframe 1</strong>:</h3>
+<div class="col2">
+<pre class="r"><code>data.frame (names (df_1))</code></pre>
+<pre><code>##                    names.df_1.
+## 1                       School
+## 2                     SchoolID
+## 3                   first_name
+## 4                    last_name
+## 5                       gender
+## 6                          OEN
+## 7          Student Grade Level
+## 8            Enrollment Status
+## 9             Reporting Period
+## 10              Responsibility
+## 11            Independent Work
+## 12                  Initiative
+## 13                Organization
+## 14               Collaboration
+## 15             Self Regulation
+## 16                 ESL/ESL/IEP
+## 17           Interview Request
+## 18                     Reading
+## 19                     Writing
+## 20          Oral Communication
+## 21              Media Literacy
+## 22            French Listening
+## 23             French Speaking
+## 24              French Reading
+## 25              French Writing
+## 26 Number Sense and Numeration
+## 27                 Measurement
+## 28  Geometry and Spatial Sense
+## 29      Patterning and Algebra
+## 30             Data Management
+## 31      Science and Technology
+## 32              Social Studies
+## 33            Health Education
+## 34          Physical Education
+## 35                       Dance
+## 36                       Drama
+## 37                       Music
+## 38                 Visual Arts</code></pre>
+<pre class="r"><code>data.frame (names (rename_ele_eport_card(df_1)))</code></pre>
+<pre><code>##    names.rename_ele_eport_card.df_1..
+## 1                              school
+## 2                            schoolid
+## 3                          first_name
+## 4                           last_name
+## 5                              gender
+## 6                                 oen
+## 7                 student grade level
+## 8                   enrollment status
+## 9                    reporting period
+## 10                     Responsibility
+## 11                   Independent Work
+## 12                         Initiative
+## 13                       Organization
+## 14                      Collaboration
+## 15                    Self Regulation
+## 16                        esl/esl/iep
+## 17                  interview request
+## 18                            Reading
+## 19                            Writing
+## 20                 Oral Communication
+## 21                     Media Literacy
+## 22                   French Listening
+## 23                    French Speaking
+## 24                     French Reading
+## 25                     French Writing
+## 26        Number Sense and Numeration
+## 27                        Measurement
+## 28                           Geometry
+## 29                         Patterning
+## 30                    Data Management
+## 31             Science and Technology
+## 32                     Social Studies
+## 33                   Health Education
+## 34                 Physical Education
+## 35                              Dance
+## 36                              Drama
+## 37                              Music
+## 38                        Visual Arts</code></pre>
+</div>
+<p>We can see that the subject column names have been changed to more complete description, i.e. “init” has been changed to “Initiative”, and “data manage” has been changed to “Data Management”.</p>
+</div>
+<div id="dataframe-2" class="section level3">
+<h3><strong>Dataframe 2</strong>:</h3>
+<div class="col2">
+<pre class="r"><code>data.frame (names (df_2))</code></pre>
+<pre><code>##                names.df_2.
+## 1                   School
+## 2                 SchoolID
+## 3               first_name
+## 4                last_name
+## 5                   gender
+## 6                      OEN
+## 7      Student Grade Level
+## 8        Enrollment Status
+## 9         Reporting Period
+## 10          responsibility
+## 11                ind work
+## 12              initiative
+## 13                     org
+## 14                    coll
+## 15                self reg
+## 16             ESL/ESL/IEP
+## 17                    read
+## 18                   write
+## 19               oral comm
+## 20          media literacy
+## 21           french listen
+## 22            french speak
+## 23             french read
+## 24            french write
+## 25 number sense numeration
+## 26                    meas
+## 27      geom spatial sense
+## 28            patt and alg
+## 29                data mgt
+## 30            sci and tech
+## 31             soc studies
+## 32                  health
+## 33                 phys ed
+## 34                   dance
+## 35                   drama
+## 36                   music
+## 37                vis arts</code></pre>
+<pre class="r"><code>data.frame (names (rename_ele_eport_card(df_2)))</code></pre>
+<pre><code>##    names.rename_ele_eport_card.df_2..
+## 1                              school
+## 2                            schoolid
+## 3                          first_name
+## 4                           last_name
+## 5                              gender
+## 6                                 oen
+## 7                 student grade level
+## 8                   enrollment status
+## 9                    reporting period
+## 10                     Responsibility
+## 11                   Independent Work
+## 12                         Initiative
+## 13                       Organization
+## 14                      Collaboration
+## 15                    Self Regulation
+## 16                        esl/esl/iep
+## 17                            Reading
+## 18                            Writing
+## 19                 Oral Communication
+## 20                     Media Literacy
+## 21                   French Listening
+## 22                    French Speaking
+## 23                     French Reading
+## 24                     French Writing
+## 25        Number Sense and Numeration
+## 26                        Measurement
+## 27                           Geometry
+## 28                         Patterning
+## 29                    Data Management
+## 30             Science and Technology
+## 31                     Social Studies
+## 32                   Health Education
+## 33                 Physical Education
+## 34                              Dance
+## 35                              Drama
+## 36                              Music
+## 37                        Visual Arts</code></pre>
+</div>
+<p>We see the same result for the second data frame - all the subject names are the same as the first data frame.</p>
+</div>
+<div id="dataframe-3" class="section level3">
+<h3><strong>Dataframe 3</strong>:</h3>
+<div class="col2">
+<pre class="r"><code>data.frame (names (df_3))</code></pre>
+<pre><code>##             names.df_3.
+## 1                School
+## 2              SchoolID
+## 3            first_name
+## 4             last_name
+## 5                gender
+## 6                   OEN
+## 7   Student Grade Level
+## 8     Enrollment Status
+## 9      Reporting Period
+## 10                 Resp
+## 11             Ind Work
+## 12                 Init
+## 13                  Org
+## 14                 Coll
+## 15      Self Regulation
+## 16          ESL/ESL/IEP
+## 17                 Read
+## 18                Write
+## 19            Oral Comm
+## 20            Media Lit
+## 21        Listen French
+## 22         Speak French
+## 23          Read French
+## 24         Write French
+## 25 Num Sense Numeration
+## 26                 Meas
+## 27     Geom and Spatial
+## 28         Patt and Alg
+## 29             Data Mgt
+## 30     Science and Tech
+## 31          Soc Studies
+## 32               Health
+## 33              Phys Ed
+## 34                Dance
+## 35                Drama
+## 36                Music
+## 37             Vis Arts</code></pre>
+<pre class="r"><code>data.frame (names (rename_ele_eport_card(df_3)))</code></pre>
+<pre><code>##    names.rename_ele_eport_card.df_3..
+## 1                              school
+## 2                            schoolid
+## 3                          first_name
+## 4                           last_name
+## 5                              gender
+## 6                                 oen
+## 7                 student grade level
+## 8                   enrollment status
+## 9                    reporting period
+## 10                     Responsibility
+## 11                   Independent Work
+## 12                         Initiative
+## 13                       Organization
+## 14                      Collaboration
+## 15                    Self Regulation
+## 16                        esl/esl/iep
+## 17                            Reading
+## 18                            Writing
+## 19                 Oral Communication
+## 20                     Media Literacy
+## 21                   French Listening
+## 22                    French Speaking
+## 23                     French Reading
+## 24                     French Writing
+## 25        Number Sense and Numeration
+## 26                        Measurement
+## 27                           Geometry
+## 28                         Patterning
+## 29                    Data Management
+## 30             Science and Technology
+## 31                     Social Studies
+## 32                   Health Education
+## 33                 Physical Education
+## 34                              Dance
+## 35                              Drama
+## 36                              Music
+## 37                        Visual Arts</code></pre>
+</div>
+<p>Now that column names are all standard then reproducible code can be shared among other data analysts from different boards.</p>
+</div>
+</div>
+
     </div>
   </article>
 
@@ -86,6 +562,18 @@
 
     </div>
     
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
 
     
 

@@ -27,7 +27,7 @@ Right now it’s very basic but as I learn more about the Yihui’s blogdown pac
       <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/02/12/working-with-report-card-data-renaming-columns/</guid>
-      <description></description>
+      <description>.col2 {columns: 2 200px; /* number of columns and width in pixels*/-webkit-columns: 2 200px; /* chrome, safari */-moz-columns: 2 200px; /* firefox */}.col3 {columns: 3 100px;-webkit-columns: 3 100px;-moz-columns: 3 100px;}One of the common problems working with data that is provided by other departments or organisations is the lack of standard naming conventions. Across school boards in Ontario there are required subjects however naming conventions are often different (i.</description>
     </item>
     
   </channel>
