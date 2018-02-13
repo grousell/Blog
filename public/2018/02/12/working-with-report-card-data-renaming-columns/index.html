@@ -131,13 +131,15 @@ Examine column names:
 ## 27      patterning algebra
 ## 28         data management
 ## 29        science and tech
-## 30          social studies
-## 31               health ed
-## 32             physical ed
-## 33                   dance
-## 34                   drama
-## 35                   music
-## 36                vis arts</code></pre>
+## 30                 history
+## 31               geography
+## 32          social studies
+## 33               health ed
+## 34             physical ed
+## 35                   dance
+## 36                   drama
+## 37                   music
+## 38                vis arts</code></pre>
 <pre class="r"><code>data.frame (names  (df_2))</code></pre>
 <pre><code>##                names.df_2.
 ## 1                   School
@@ -169,13 +171,15 @@ Examine column names:
 ## 27            patt and alg
 ## 28                data mgt
 ## 29            sci and tech
-## 30             soc studies
-## 31                  health
-## 32                 phys ed
-## 33                   dance
-## 34                   drama
-## 35                   music
-## 36                vis arts</code></pre>
+## 30                    hist
+## 31                    geog
+## 32             soc studies
+## 33                  health
+## 34                 phys ed
+## 35                   dance
+## 36                   drama
+## 37                   music
+## 38                vis arts</code></pre>
 <pre class="r"><code>data.frame (names  (df_3))</code></pre>
 <pre><code>##             names.df_3.
 ## 1                School
@@ -207,13 +211,15 @@ Examine column names:
 ## 27         Patt and Alg
 ## 28             Data Mgt
 ## 29     Science and Tech
-## 30          Soc Studies
-## 31               Health
-## 32              Phys Ed
-## 33                Dance
-## 34                Drama
-## 35                Music
-## 36             Vis Arts</code></pre>
+## 30                 Hist
+## 31                 Geog
+## 32          Soc Studies
+## 33               Health
+## 34              Phys Ed
+## 35                Dance
+## 36                Drama
+## 37                Music
+## 38             Vis Arts</code></pre>
 </div>
 </div>
 <div id="function-to-rename-columns" class="section level2">
@@ -249,10 +255,12 @@ Examine column names:
 
   colnames(df)[str_detect(colnames(df), &quot;num&quot;)] &lt;- &#39;Number Sense and Numeration&#39;
   colnames(df)[str_detect(colnames(df), &quot;meas&quot;)] &lt;- &#39;Measurement&#39;
-  colnames(df)[str_detect(colnames(df), &quot;geo&quot;)] &lt;- &#39;Geometry&#39;
+  colnames(df)[str_detect(colnames(df), &quot;geom&quot;)] &lt;- &#39;Geometry&#39;
   colnames(df)[str_detect(colnames(df), &quot;patt&quot;)] &lt;- &#39;Patterning&#39;
   colnames(df)[str_detect(colnames(df), &quot;data&quot;)] &lt;- &#39;Data Management&#39;
-
+  
+  colnames(df)[str_detect(colnames(df), &quot;hist&quot;)] &lt;- &#39;History&#39;
+  colnames(df)[str_detect(colnames(df), &quot;geog&quot;)] &lt;- &#39;Geography&#39;
   colnames(df)[str_detect(colnames(df), &quot;sci&quot;) | str_detect(colnames(df), &quot;tech&quot;)] &lt;- &#39;Science and Technology&#39;
   colnames(df)[str_detect(colnames(df), &quot;soc&quot;)]  &lt;- &#39;Social Studies&#39;
   colnames(df)[str_detect(colnames(df), &quot;health&quot;)]  &lt;- &#39;Health Education&#39;
@@ -303,13 +311,15 @@ Examine column names:
 ## 27      patterning algebra
 ## 28         data management
 ## 29        science and tech
-## 30          social studies
-## 31               health ed
-## 32             physical ed
-## 33                   dance
-## 34                   drama
-## 35                   music
-## 36                vis arts</code></pre>
+## 30                 history
+## 31               geography
+## 32          social studies
+## 33               health ed
+## 34             physical ed
+## 35                   dance
+## 36                   drama
+## 37                   music
+## 38                vis arts</code></pre>
 <pre class="r"><code>data.frame (names (rename_ele_eport_card(df_1)))</code></pre>
 <pre><code>##    names.rename_ele_eport_card.df_1..
 ## 1                              school
@@ -341,13 +351,15 @@ Examine column names:
 ## 27                         Patterning
 ## 28                    Data Management
 ## 29             Science and Technology
-## 30                     Social Studies
-## 31                   Health Education
-## 32                 Physical Education
-## 33                              Dance
-## 34                              Drama
-## 35                              Music
-## 36                        Visual Arts</code></pre>
+## 30                            History
+## 31                          Geography
+## 32                     Social Studies
+## 33                   Health Education
+## 34                 Physical Education
+## 35                              Dance
+## 36                              Drama
+## 37                              Music
+## 38                        Visual Arts</code></pre>
 </div>
 <p>We can see that the subject column names have been changed to more complete description, i.e. “init” has been changed to “Initiative”, and “data manage” has been changed to “Data Management”.</p>
 </div>
@@ -385,13 +397,15 @@ Examine column names:
 ## 27            patt and alg
 ## 28                data mgt
 ## 29            sci and tech
-## 30             soc studies
-## 31                  health
-## 32                 phys ed
-## 33                   dance
-## 34                   drama
-## 35                   music
-## 36                vis arts</code></pre>
+## 30                    hist
+## 31                    geog
+## 32             soc studies
+## 33                  health
+## 34                 phys ed
+## 35                   dance
+## 36                   drama
+## 37                   music
+## 38                vis arts</code></pre>
 <pre class="r"><code>data.frame (names (rename_ele_eport_card(df_2)))</code></pre>
 <pre><code>##    names.rename_ele_eport_card.df_2..
 ## 1                              school
@@ -423,13 +437,15 @@ Examine column names:
 ## 27                         Patterning
 ## 28                    Data Management
 ## 29             Science and Technology
-## 30                     Social Studies
-## 31                   Health Education
-## 32                 Physical Education
-## 33                              Dance
-## 34                              Drama
-## 35                              Music
-## 36                        Visual Arts</code></pre>
+## 30                            History
+## 31                          Geography
+## 32                     Social Studies
+## 33                   Health Education
+## 34                 Physical Education
+## 35                              Dance
+## 36                              Drama
+## 37                              Music
+## 38                        Visual Arts</code></pre>
 </div>
 <p>We see the same result for the second data frame - all the subject names are the same as the first data frame.</p>
 </div>
@@ -467,13 +483,15 @@ Examine column names:
 ## 27         Patt and Alg
 ## 28             Data Mgt
 ## 29     Science and Tech
-## 30          Soc Studies
-## 31               Health
-## 32              Phys Ed
-## 33                Dance
-## 34                Drama
-## 35                Music
-## 36             Vis Arts</code></pre>
+## 30                 Hist
+## 31                 Geog
+## 32          Soc Studies
+## 33               Health
+## 34              Phys Ed
+## 35                Dance
+## 36                Drama
+## 37                Music
+## 38             Vis Arts</code></pre>
 <pre class="r"><code>data.frame (names (rename_ele_eport_card(df_3)))</code></pre>
 <pre><code>##    names.rename_ele_eport_card.df_3..
 ## 1                              school
@@ -505,13 +523,15 @@ Examine column names:
 ## 27                         Patterning
 ## 28                    Data Management
 ## 29             Science and Technology
-## 30                     Social Studies
-## 31                   Health Education
-## 32                 Physical Education
-## 33                              Dance
-## 34                              Drama
-## 35                              Music
-## 36                        Visual Arts</code></pre>
+## 30                            History
+## 31                          Geography
+## 32                     Social Studies
+## 33                   Health Education
+## 34                 Physical Education
+## 35                              Dance
+## 36                              Drama
+## 37                              Music
+## 38                        Visual Arts</code></pre>
 </div>
 <p>Now that column names are all standard then reproducible code can be shared among other data analysts from different boards.</p>
 </div>

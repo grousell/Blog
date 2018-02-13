@@ -43,7 +43,6 @@ df_1 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sa
 df_2 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_2.csv")
 df_3 <- read_csv("https://raw.githubusercontent.com/grousell/Blog/master/data/sample_report_card_3.csv")
 
-
 ```
 
 Examine column names:
@@ -97,10 +96,12 @@ rename_ele_eport_card <- function(df){
 
   colnames(df)[str_detect(colnames(df), "num")] <- 'Number Sense and Numeration'
   colnames(df)[str_detect(colnames(df), "meas")] <- 'Measurement'
-  colnames(df)[str_detect(colnames(df), "geo")] <- 'Geometry'
+  colnames(df)[str_detect(colnames(df), "geom")] <- 'Geometry'
   colnames(df)[str_detect(colnames(df), "patt")] <- 'Patterning'
   colnames(df)[str_detect(colnames(df), "data")] <- 'Data Management'
-
+  
+  colnames(df)[str_detect(colnames(df), "hist")] <- 'History'
+  colnames(df)[str_detect(colnames(df), "geog")] <- 'Geography'
   colnames(df)[str_detect(colnames(df), "sci") | str_detect(colnames(df), "tech")] <- 'Science and Technology'
   colnames(df)[str_detect(colnames(df), "soc")]  <- 'Social Studies'
   colnames(df)[str_detect(colnames(df), "health")]  <- 'Health Education'
